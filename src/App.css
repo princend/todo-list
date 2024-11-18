@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+
+/* 增加整個 list-item 作用範圍 */
+.list-group-item {
+  cursor: pointer; /* 顯示手形游標 */
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #f1f1f1; /* 鼠標懸停時變色，增加互動感 */
+}
+
+/* 增加勾選框和文本之間的間距 */
+.todo-checkbox + span {
+  font-size: 1.2rem; /* 增加文字大小 */
+}
+
