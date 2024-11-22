@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [nextId, setNextId] = useState<number>(1);
   const [newTodo, setNewTodo] = useState<string>('');
-  const [isNavOpen, setIsNavOpen] = useState(true);
+  const [isNavOpen, setIsNavOpen] = useState(false);
   const [navWidth, setNavWidth] = useState(100);
 
   // 讀取 Local Storage 中的 todos
@@ -137,7 +137,7 @@ const App: React.FC = () => {
                 <div className="col-12 col-md-9">
                   <Routes>
                     <Route path="/" element={<Navigate to="/todo-list/page-check" />} />
-                    <Route path="/todo-list" element={
+                    <Route path="/todo-list/*" element={
                       <div>
                         <Outlet />
                       </div>
