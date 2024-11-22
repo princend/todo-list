@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Outlet } from 'react-router-dom';
 import './App.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -94,7 +94,7 @@ const App: React.FC = () => {
               zIndex: 999
             }}
           >
-            <Link className="nav-link" to="/todo-list/page-check">檢查</Link>
+            <Link className="nav-link" to="/todo-list">檢查</Link>
             <Link className="nav-link" to="/todo-list/page-setting">設定</Link>
             
             <div
@@ -136,25 +136,28 @@ const App: React.FC = () => {
               <div className="row">
                 <div className="col-12 col-md-9">
                   <Routes>
-                    <Route path="/" element={<Navigate to="/todo-list/page-check" />} />
-                    <Route path="/todo-list/*" element={
+                    <Route path="/todo-list" element={
                       <div>
                         <Outlet />
                       </div>
                     }>
-                      <Route path="page-check" element={<PageCheck
-                        todos={todos}
-                        toggleTodo={toggleTodo}
-                        resetTodos={resetTodos}
-                      />} />
-                      <Route path="page-setting" element={<PageSetting
-                        newTodo={newTodo}
-                        setNewTodo={setNewTodo}
-                        addTodo={addTodo}
-                        todos={todos}
-                        deleteTodo={deleteTodo}
-                        moveTodo={moveTodo}
-                      />} />
+                      <Route index element={
+                        <PageCheck
+                          todos={todos}
+                          toggleTodo={toggleTodo}
+                          resetTodos={resetTodos}
+                        />
+                      } />
+                      <Route path="page-setting" element={
+                        <PageSetting
+                          newTodo={newTodo}
+                          setNewTodo={setNewTodo}
+                          addTodo={addTodo}
+                          todos={todos}
+                          deleteTodo={deleteTodo}
+                          moveTodo={moveTodo}
+                        />
+                      } />
                     </Route>
                   </Routes>
                 </div>
