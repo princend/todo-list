@@ -53,7 +53,7 @@ const PageSetting: React.FC<PageSettingProps> = ({ newTodo, setNewTodo, addTodo,
 
     return (
         <div ref={drop}>
-            <h1>設定 - 新增/刪除/修改 代辦事項</h1>
+            <h1>設定代辦事項</h1>
             <div className="mb-3">
                 <input
                     className="form-control"

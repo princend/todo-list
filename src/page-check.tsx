@@ -18,7 +18,7 @@ type PageCheckProps = {
 const PageCheck: React.FC<PageCheckProps> = ({ todos, toggleTodo, resetTodos }) => {
   return (
     <div>
-      <h2>代辦清單</h2>
+      <h1>代辦清單</h1>
       <button className="btn btn-warning mb-3" onClick={resetTodos}>
         重置勾選
       </button>
