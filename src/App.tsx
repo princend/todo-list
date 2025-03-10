@@ -6,6 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import PageCheck from './page-check';
 import PageSetting from './page-setting';
 import { Todo } from './todo';
+import  Block  from "./block";
 
 
 const App: React.FC = () => {
@@ -67,106 +68,109 @@ const App: React.FC = () => {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <Router>
-        <div className="App d-flex">
-          <button 
-            className="btn btn-light position-fixed"
-            style={{ 
-              zIndex: 1000, 
-              left: isNavOpen ? `${navWidth + 10}px` : '10px', 
-              top: '10px',
-              transition: 'left 0.3s ease-in-out'
-            }}
-            onClick={() => setIsNavOpen(!isNavOpen)}
-          >
-            {isNavOpen ? '←' : '☰'}
-          </button>
-
-          <div 
-            className="navbar-nav flex-column bg-light p-3"
-            style={{ 
-              width: `${navWidth}px`, 
-              height: '100vh',
-              position: 'fixed',
-              transform: `translateX(${isNavOpen ? '0' : '-100%'})`,
-              transition: 'transform 0.3s ease-in-out',
-              zIndex: 999
-            }}
-          >
-            <Link className="nav-link" to="/todo-list">檢查</Link>
-            <Link className="nav-link" to="/todo-list/page-setting">設定</Link>
-            
-            <div
+    <>
+      {/* <Block></Block> */}
+      <DndProvider backend={HTML5Backend}>
+        <Router>
+          <div className="App d-flex">
+            <button
+              className="btn btn-light position-fixed"
               style={{
-                width: '8px',
-                height: '100%',
-                position: 'absolute',
-                right: 0,
-                top: 0,
-                cursor: 'ew-resize',
-                backgroundColor: 'transparent'
+                zIndex: 1000,
+                left: isNavOpen ? `${navWidth + 10}px` : '10px',
+                top: '10px',
+                transition: 'left 0.3s ease-in-out'
               }}
-              onMouseDown={(e) => {
-                const startX = e.pageX;
-                const startWidth = navWidth;
+              onClick={() => setIsNavOpen(!isNavOpen)}
+            >
+              {isNavOpen ? '←' : '☰'}
+            </button>
 
-                const handleMouseMove = (e: MouseEvent) => {
-                  const newWidth = startWidth + (e.pageX - startX);
-                  setNavWidth(Math.max(150, Math.min(400, newWidth)));
-                };
-
-                const handleMouseUp = () => {
-                  document.removeEventListener('mousemove', handleMouseMove);
-                  document.removeEventListener('mouseup', handleMouseUp);
-                };
-
-                document.addEventListener('mousemove', handleMouseMove);
-                document.addEventListener('mouseup', handleMouseUp);
+            <div
+              className="navbar-nav flex-column bg-light p-3"
+              style={{
+                width: `${navWidth}px`,
+                height: '100vh',
+                position: 'fixed',
+                transform: `translateX(${isNavOpen ? '0' : '-100%'})`,
+                transition: 'transform 0.3s ease-in-out',
+                zIndex: 999
               }}
-            />
-          </div>
+            >
+              <Link className="nav-link" to="/todo-list">檢查</Link>
+              <Link className="nav-link" to="/todo-list/page-setting">設定</Link>
 
-          <div style={{ 
-            marginLeft: isNavOpen ? `${navWidth}px` : '0',
-            transition: 'margin-left 0.3s ease-in-out',
-            width: '100%'
-          }}>
-            <div className="container-fluid mt-4">
-              <div className="row">
-                <div className="col-12 col-md-9">
-                  <Routes>
-                    <Route path="/todo-list" element={
-                      <div>
-                        <Outlet />
-                      </div>
-                    }>
-                      <Route index element={
-                        <PageCheck
-                          todos={todos}
-                          toggleTodo={toggleTodo}
-                          resetTodos={resetTodos}
-                        />
-                      } />
-                      <Route path="page-setting" element={
-                        <PageSetting
-                          newTodo={newTodo}
-                          setNewTodo={setNewTodo}
-                          addTodo={addTodo}
-                          todos={todos}
-                          deleteTodo={deleteTodo}
-                          moveTodo={moveTodo}
-                        />
-                      } />
-                    </Route>
-                  </Routes>
+              <div
+                style={{
+                  width: '8px',
+                  height: '100%',
+                  position: 'absolute',
+                  right: 0,
+                  top: 0,
+                  cursor: 'ew-resize',
+                  backgroundColor: 'transparent'
+                }}
+                onMouseDown={(e) => {
+                  const startX = e.pageX;
+                  const startWidth = navWidth;
+
+                  const handleMouseMove = (e: MouseEvent) => {
+                    const newWidth = startWidth + (e.pageX - startX);
+                    setNavWidth(Math.max(150, Math.min(400, newWidth)));
+                  };
+
+                  const handleMouseUp = () => {
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                  };
+
+                  document.addEventListener('mousemove', handleMouseMove);
+                  document.addEventListener('mouseup', handleMouseUp);
+                }}
+              />
+            </div>
+
+            <div style={{
+              marginLeft: isNavOpen ? `${navWidth}px` : '0',
+              transition: 'margin-left 0.3s ease-in-out',
+              width: '100%'
+            }}>
+              <div className="container-fluid mt-4">
+                <div className="row">
+                  <div className="col-12 col-md-9">
+                    <Routes>
+                      <Route path="/todo-list" element={
+                        <div>
+                          <Outlet />
+                        </div>
+                      }>
+                        <Route index element={
+                          <PageCheck
+                            todos={todos}
+                            toggleTodo={toggleTodo}
+                            resetTodos={resetTodos}
+                          />
+                        } />
+                        <Route path="page-setting" element={
+                          <PageSetting
+                            newTodo={newTodo}
+                            setNewTodo={setNewTodo}
+                            addTodo={addTodo}
+                            todos={todos}
+                            deleteTodo={deleteTodo}
+                            moveTodo={moveTodo}
+                          />
+                        } />
+                      </Route>
+                    </Routes>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </Router>
-    </DndProvider>
+        </Router>
+      </DndProvider>
+    </>
   );
 };
 export default App;
