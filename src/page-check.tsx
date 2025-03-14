@@ -1,5 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { Container, Row, Col, Card, ListGroup, Button, Badge } from 'react-bootstrap';
 
 type Todo = {
   id: number;
@@ -29,38 +30,53 @@ const PageCheck: React.FC<PageCheckProps> = ({ todos, toggleTodo, resetTodos }) 
   }, [todos]);
 
   return (
-    <div className='relative'>
-      <h1>代辦清單</h1>
-      <button className="btn btn-warning mb-3" onClick={resetTodos}>
-        重置勾選
-      </button>
-      <div className="absolute top-0 right-0 m-4 p-2 bg-white rounded-lg shadow-lg text-right">
-        <div className="text-green-600 font-semibold">已完成事项: {checkedCount}</div>
-        <div className="text-red-600 font-semibold">未完成事项: {unCheckedCount}</div>
-      </div>
-
-      <div className="container">
-        <ul className="list-group">
-          {todos.map(todo => (
-            <li
-              key={todo.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
-              onClick={() => toggleTodo(todo.id)}  // 點擊整個項目切換勾選
-              style={{ cursor: 'pointer' }}  // 添加手形游標
-            >
-              <input
-                type="checkbox"
-                className="todo-checkbox"
-                checked={todo.completed}
-                onChange={() => { }}
-                readOnly  // 禁止直接修改勾選框，只有點擊項目才會改變
-              />
-              <span className="ms-3">{todo.text}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+    <Container>
+      <Row className="justify-content-between align-items-center my-4">
+        <Col>
+          <h1>代辦清單</h1>
+        </Col>
+        <Col className="text-end">
+          <Button variant="warning" onClick={resetTodos}>重置勾選</Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={8}>
+          <Card>
+            <ListGroup variant="flush">
+              {todos.map(todo => (
+                <ListGroup.Item
+                  key={todo.id}
+                  className="d-flex justify-content-between align-items-center"
+                  onClick={() => toggleTodo(todo.id)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => {}}
+                    readOnly
+                  />
+                  <span className={`ms-3 ${todo.completed ? 'text-decoration-line-through' : ''}`}>
+                    {todo.text}
+                  </span>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Card>
+        </Col>
+        <Col md={4}>
+          <Card>
+            <Card.Body>
+              <Card.Title>統計</Card.Title>
+              <Card.Text>
+                <div>已完成事項: <Badge bg="success">{checkedCount}</Badge></div>
+                <div>未完成事項: <Badge bg="danger">{unCheckedCount}</Badge></div>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
