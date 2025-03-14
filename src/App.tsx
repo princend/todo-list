@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [newTodo, setNewTodo] = useState<string>('');
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [navWidth, setNavWidth] = useState(100);
-
+ 
   // 讀取 Local Storage 中的 todos
   useEffect(() => {
     const savedTodos = localStorage.getItem('todos');

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 
 type Todo = {
   id: number;
@@ -7,22 +8,36 @@ type Todo = {
 };
 
 
-
-
 type PageCheckProps = {
   todos: Todo[];
   toggleTodo: (id: number) => void;
   resetTodos: () => void;
 };
 
+
+
 const PageCheck: React.FC<PageCheckProps> = ({ todos, toggleTodo, resetTodos }) => {
+
+
+  const [checkedCount, setCheckedCount] = useState(0);
+  const [unCheckedCount, setUnCheckedCount] = useState(0);
+
+  useEffect(() => {
+    setCheckedCount(todos.filter(todo => todo.completed).length);
+    setUnCheckedCount(todos.filter(todo => !todo.completed).length);
+
+  }, [todos]);
+
   return (
-    <div>
+    <div className='relative'>
       <h1>代辦清單</h1>
       <button className="btn btn-warning mb-3" onClick={resetTodos}>
         重置勾選
       </button>
-
+      <div className="absolute top-0 right-0 m-4 p-2 bg-white rounded-lg shadow-lg text-right">
+        <div className="text-green-600 font-semibold">已完成事项: {checkedCount}</div>
+        <div className="text-red-600 font-semibold">未完成事项: {unCheckedCount}</div>
+      </div>
 
       <div className="container">
         <ul className="list-group">
